@@ -1,5 +1,7 @@
 #### 安装typescript
+```
 npm install -g typescript
+```
 
 #### 编译ts文件生成js
 tsc 文件名.ts
