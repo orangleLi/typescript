@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div>
+      <input :value="firName" @input="onChangeFirName" />
+    </div>
     姓名：{{userName}},
     年龄：{{age}},
     性别：{{SEX[sex]}}
@@ -10,7 +13,7 @@
 
 <script lang="ts">
 import {
-  Component, Prop, Vue, Emit,
+  Component, Prop, Vue, Emit, Model,
 } from 'vue-property-decorator';
 
 enum Sex {
@@ -23,6 +26,9 @@ enum Sex {
 })
 export default class User extends Vue {
   SEX: any = Sex;
+
+  @Model('changeFirName', { type: String })
+  firName!: string;
 
   @Prop(Number)
   id!: number;
@@ -48,6 +54,11 @@ export default class User extends Vue {
   @Emit() // 不写函数名的话默认为事件的转换为小写的方法名，用横线分隔开 比如changeAge默认就为change-age
   changeAge(id: number) {
     return id;
+  }
+
+  @Emit('changeFirName')
+  onChangeFirName(e: any) {
+    return e.target.value;
   }
 }
 </script>

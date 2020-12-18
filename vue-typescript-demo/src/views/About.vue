@@ -9,13 +9,21 @@
     <hr>
 
     <user v-for="item in userList" :key="item.id" v-bind="item" @on-move='onMove'
-    @change-age="changeAge"></user>
+    v-model="firstName" @change-age="changeAge"></user>
+
+    <hr>
+
+    <div>
+      <p>{{num}}<button @click="add">+1</button></p>
+      <p>{{filterList.join('-')}}</p>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Watch, Vue } from 'vue-property-decorator';
 import User from '../components/User.vue';
+import { AboutStore } from '../store/module/about';
 
 /*
   vue-property-decorator
@@ -94,6 +102,18 @@ export default class About extends Vue {
     [this.firstName, this.lastName] = arr;
   }
 
+  get num() {
+    return AboutStore.count;
+  }
+
+  get filterList() {
+    return AboutStore.filterList;
+  }
+
+  add() {
+    AboutStore.updateCount(1);
+  }
+
   motifyFullName() {
     this.fullName = 'li si';
   }
@@ -114,12 +134,13 @@ export default class About extends Vue {
   }
 
   changeAge(id: number) {
-    const user: any = this.userList.find((item) => item.id === id);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const user: TUser = this.userList.find((item) => item.id === id)!;
     user.age += 1;
   }
 
   created() {
-    //
+    AboutStore.getList();
   }
 
   mounted() {

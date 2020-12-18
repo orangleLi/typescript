@@ -1,15 +1,14 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+// eslint-disable-next-line import/no-cycle
+import { UAboutState } from './module/about';
+
 Vue.use(Vuex);
 
-export default new Vuex.Store({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  },
-});
+interface TRootState {
+  about: UAboutState;
+}
+
+export default new Vuex.Store<TRootState>({});
+// export default new Vuex.Store({});
